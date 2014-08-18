@@ -7,9 +7,6 @@ var bodyParser = require('body-parser');
 var stylus = require('stylus');
 var nib = require('nib');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
-
 var STATIC = (path.join(__dirname, 'static'));
 
 var app = express();
@@ -37,8 +34,9 @@ app.use(stylus.middleware({
 }));
 app.use(express.static(STATIC));
 
-app.use('/', index);
-app.use('/users', users);
+// Routes
+app.use('/', require('./routes/index'));
+app.use('/api', require('./routes/api'));
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
