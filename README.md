@@ -1,4 +1,4 @@
-mk5-exp-boilerplate
+ng-exp-boilerplate
 ===================
 
-custom boilerplate for express projects
+custom boilerplate for angular / express projects
