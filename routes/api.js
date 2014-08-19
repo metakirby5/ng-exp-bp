@@ -1,9 +1,17 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET api . */
-router.get('/', function(req, res) {
-  res.send('respond with a resource');
-});
+// REST API
+router.
+  get('/', function(req, res) {
+    res.json({
+      some: 'json'
+    });
+  }).
+  get('/:id', function(req, res) {
+    res.json({
+      'provided id': req.params.id
+    });
+  });
 
 module.exports = router;

@@ -35,7 +35,7 @@ app.use(stylus.middleware({
 app.use(express.static(STATIC));
 
 // Routes
-app.use('/', require('./routes/index'));
+app.use('/', require('./routes/client'));
 app.use('/api', require('./routes/api'));
 
 /// catch 404 and forward to error handler
