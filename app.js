@@ -1,4 +1,5 @@
 var express = require('express');
+var mongoose = require('mongoose');
 var path = require('path');
 var favicon = require('static-favicon');
 var logger = require('morgan');
@@ -7,12 +8,13 @@ var bodyParser = require('body-parser');
 var stylus = require('stylus');
 var nib = require('nib');
 
-var STATIC = (path.join(__dirname, 'static'));
+var DIR_CLIENT = path.join(__dirname, 'client');
+var DIR_STATIC = path.join(__dirname, 'static');
 
 var app = express();
+mongoose.connect('mongodb://localhost/PROJECT');
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(DIR_CLIENT, 'views'));
 app.set('view engine', 'jade');
 
 app.use(favicon());
@@ -22,8 +24,8 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(stylus.middleware({
     // For some reason, stylus middleware needs trailing slashes
-    src: path.join(__dirname, 'styl/'),
-    dest: path.join(STATIC, 'css/'),
+    src: path.join(DIR_CLIENT, 'styl/'),
+    dest: path.join(DIR_STATIC, 'css/'),
     compile: function(str, path) {
         return stylus(str)
             .set('filename', path)
@@ -32,11 +34,11 @@ app.use(stylus.middleware({
             .import('nib');
     }
 }));
-app.use(express.static(STATIC));
+app.use(express.static(DIR_STATIC));
 
 // Routes
-app.use('/', require('./routes/client'));
-app.use('/api', require('./routes/api'));
+app.use('/', require('./client/routes.js'));
+app.use('/api', require('./server/routes.js'));
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
